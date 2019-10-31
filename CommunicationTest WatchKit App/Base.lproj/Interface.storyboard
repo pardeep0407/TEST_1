@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="13771" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
-    <device id="watch38" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="15400" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TKJ-vR-82D">
+    <device id="watch38"/>
     <dependencies>
         <deployment identifier="watchOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="13756"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="15400"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Helvetica.ttc">
-            <string>Helvetica-Bold</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Interface Controller-->
         <scene sceneID="aou-V4-d1y">
@@ -21,46 +14,22 @@
                     <items>
                         <group width="1" alignment="left" id="PEo-iJ-VR0">
                             <items>
-                                <button alignment="left" title="Push " id="fzB-f5-y2S">
+                                <button width="1" alignment="left" title="Feed" id="fzB-f5-y2S">
                                     <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <fontDescription key="font" type="system" pointSize="10"/>
+                                    <fontDescription key="font" type="system" pointSize="12"/>
                                     <connections>
-                                        <action selector="buttonPressed" destination="AgC-eL-Hgc" id="EFk-bs-nx7"/>
+                                        <action selector="feedButtonPressed" destination="AgC-eL-Hgc" id="wB1-sX-p4T"/>
                                     </connections>
                                 </button>
-                                <label height="20" alignment="left" text="Label" numberOfLines="2" id="PMJ-75-bao">
-                                    <fontDescription key="font" name="Helvetica-Bold" family="Helvetica" pointSize="13"/>
-                                </label>
                             </items>
                         </group>
                         <imageView width="47" height="47" alignment="center" image="pokeball" id="RxI-YZ-AgM"/>
                         <label alignment="center" text="Albert is hungry" id="QdJ-Fj-LrR">
                             <fontDescription key="font" style="UICTFontTextStyleCaption1"/>
                         </label>
-                        <group width="1" alignment="left" id="zVJ-eg-oyl">
+                        <group width="1" alignment="left" layout="vertical" id="zVJ-eg-oyl">
                             <items>
-                                <button alignment="center" title="N" id="sSF-lA-oJl">
-                                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <fontDescription key="font" type="system" pointSize="13"/>
-                                    <connections>
-                                        <action selector="nameButtonPressed" destination="AgC-eL-Hgc" id="eHT-Ns-0Sz"/>
-                                    </connections>
-                                </button>
-                                <button alignment="center" title="S" id="kff-c9-AJG">
-                                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <fontDescription key="font" type="system" pointSize="13"/>
-                                    <connections>
-                                        <action selector="startButtonPressed" destination="AgC-eL-Hgc" id="Fp1-tc-PGk"/>
-                                    </connections>
-                                </button>
-                                <button alignment="center" title="F" id="omX-xO-7Ft">
-                                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <fontDescription key="font" type="system" pointSize="13"/>
-                                    <connections>
-                                        <action selector="feedButtonPressed" destination="AgC-eL-Hgc" id="7p2-0N-wzS"/>
-                                    </connections>
-                                </button>
-                                <button alignment="center" title="H" id="yEc-zK-6HE">
+                                <button width="1" alignment="center" title="Hibernate" id="yEc-zK-6HE">
                                     <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <fontDescription key="font" type="system" pointSize="13"/>
                                     <connections>
@@ -74,7 +43,6 @@
                         </label>
                     </items>
                     <connections>
-                        <outlet property="messageLabel" destination="PMJ-75-bao" id="X1T-aZ-hg2"/>
                         <outlet property="nameLabel" destination="QdJ-Fj-LrR" id="HAA-SN-3Fj"/>
                         <outlet property="outputLabel" destination="Pt1-1p-5yN" id="Ojk-s6-fYf"/>
                         <outlet property="pokemonImageView" destination="RxI-YZ-AgM" id="Cu6-PZ-z19"/>
@@ -88,29 +56,49 @@
             <objects>
                 <controller id="TKJ-vR-82D" customClass="Screen2Sample" customModule="CommunicationTest_WatchKit_Extension">
                     <items>
-                        <button width="1" alignment="left" title="Give me a name" id="aem-N8-vQs">
-                            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="selectNameButtonPressed" destination="TKJ-vR-82D" id="PWX-4J-nLv"/>
-                            </connections>
-                        </button>
-                        <imageView alignment="center" id="YVj-81-CS0"/>
-                        <label alignment="left" text="Label" id="hsS-ha-cvx"/>
-                        <button width="1" alignment="left" title="Start" id="pBg-zB-rVo">
-                            <color key="titleColor" red="0.31372549020000001" green="0.27450980390000002" blue="0.34509803919999998" alpha="1" colorSpace="deviceRGB"/>
-                            <color key="backgroundColor" red="1" green="0.9385274106" blue="0.23414020229999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="startButtonPressed" destination="TKJ-vR-82D" id="yIB-Vl-PdC"/>
-                            </connections>
-                        </button>
+                        <group width="1" alignment="left" layout="overlap" id="hOw-Pv-lju">
+                            <items>
+                                <group width="1" height="1" alignment="left" layout="vertical" id="623-tz-FKc">
+                                    <items>
+                                        <button width="1" alignment="left" title="Give me a name" id="aem-N8-vQs">
+                                            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <connections>
+                                                <action selector="selectNameButtonPressed" destination="TKJ-vR-82D" id="PWX-4J-nLv"/>
+                                            </connections>
+                                        </button>
+                                        <imageView alignment="center" id="YVj-81-CS0"/>
+                                        <label alignment="left" textAlignment="center" id="hsS-ha-cvx"/>
+                                        <button width="1" alignment="left" title="Start" id="pBg-zB-rVo">
+                                            <color key="titleColor" red="0.31372549020000001" green="0.27450980390000002" blue="0.34509803919999998" alpha="1" colorSpace="deviceRGB"/>
+                                            <color key="backgroundColor" red="1" green="0.9385274106" blue="0.23414020229999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <connections>
+                                                <action selector="startButtonPressed" destination="TKJ-vR-82D" id="yIB-Vl-PdC"/>
+                                                <segue destination="AgC-eL-Hgc" kind="modal" id="QlG-bk-lOk"/>
+                                            </connections>
+                                        </button>
+                                    </items>
+                                </group>
+                                <group width="1" alignment="left" id="MqU-fx-3m2">
+                                    <items>
+                                        <label width="1" height="1" alignment="left" text="Choose Pockemon from mobile app" textAlignment="center" numberOfLines="0" id="Loj-hM-07i"/>
+                                    </items>
+                                </group>
+                            </items>
+                        </group>
                     </items>
                     <connections>
+                        <outlet property="choosePokemonGroup" destination="MqU-fx-3m2" id="YBF-va-Srh"/>
+                        <outlet property="nameButton" destination="aem-N8-vQs" id="bzT-Yn-Ry6"/>
                         <outlet property="nameLabel" destination="hsS-ha-cvx" id="UZr-zS-n0S"/>
                         <outlet property="pokemonImageView" destination="YVj-81-CS0" id="xZn-R5-7aP"/>
+                        <outlet property="startButton" destination="pBg-zB-rVo" id="xNr-3u-EKa"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="562" y="382"/>
+            <point key="canvasLocation" x="307" y="31"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="pokeball" width="64" height="64"/>
+    </resources>
 </document>

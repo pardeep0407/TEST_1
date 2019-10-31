@@ -11,12 +11,11 @@ import Foundation
 import WatchConnectivity
 
 class InterfaceController: WKInterfaceController, WCSessionDelegate {
-
+    
     
     // MARK: Outlets
     // ---------------------
-    @IBOutlet var messageLabel: WKInterfaceLabel!
-   
+    
     // Imageview for the pokemon
     @IBOutlet var pokemonImageView: WKInterfaceImage!
     // Label for Pokemon name (Albert is hungry)
@@ -25,10 +24,14 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     @IBOutlet var outputLabel: WKInterfaceLabel!
     
     
+    var gameUpdateTimer : Timer?
+    let updateTime : Int = 5 //Seconds
+    var hungerPoints : Int = 0
+    var HPPoints : Int = 100
     
     // MARK: Delegate functions
     // ---------------------
-
+    
     // Default function, required by the WCSessionDelegate on the Watch side
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         //@TODO
@@ -38,12 +41,10 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         print("WATCH: Got message from Phone")
         // Message from phone comes in this format: ["course":"MADT"]
-        let messageBody = message["course"] as! String
-        messageLabel.setText(messageBody)
     }
     
-
-
+    
+    
     
     // MARK: WatchKit Interface Controller Functions
     // ----------------------------------
@@ -64,6 +65,25 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
         
+        self.startTimer()
+        self.setupInfo()
+    }
+    
+    override func willDisappear() {
+        super.willDisappear()
+        
+        self.stopTimer()
+    }
+    
+    
+    func setupInfo(){
+        let selectedPokemon = UserDefaults.standard.value(forKey: "Current_Selected_Pokemon") as? String ?? ""
+        let pokemonName = UserDefaults.standard.value(forKey: selectedPokemon) as? String ?? ""
+        
+        nameLabel.setText("\(pokemonName.capitalized) is hungry")
+        pokemonImageView.setImage(UIImage(named: selectedPokemon))
+        
+        outputLabel.setText("HP:\((self.HPPoints < 0) ? 0 : self.HPPoints), Hunger:\((self.hungerPoints < 0) ? 0 : self.hungerPoints)")
         
     }
     
@@ -71,52 +91,75 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
-
+    
+    //MARK: Timer
+    func startTimer(){
+        self.stopTimer()
+        gameUpdateTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(updateTime), repeats: true, block: { (timerObj) in
+            self.hungerPoints += 10
+            if self.hungerPoints >= 80{
+                self.HPPoints -= 5
+                if self.HPPoints <= 0{
+                    self.presentAlert(withTitle: "Oops!!", message: "Your pokemon die due to poor health", preferredStyle: .alert, actions: [
+                        WKAlertAction(title: "Okay", style: .default, handler: {
+                            self.dismiss()
+                        })])
+                }
+            }
+            
+            self.setupInfo()
+        })
+    }
+    
+    func stopTimer(){
+        if gameUpdateTimer != nil{
+            gameUpdateTimer?.invalidate()
+            gameUpdateTimer = nil
+        }
+        
+    }
     
     // MARK: Actions
     // ---------------------
     
-    // 2. When person presses button on watch, send a message to the phone
-    @IBAction func buttonPressed() {
-        
-        if WCSession.default.isReachable {
-            print("Attempting to send message to phone")
-            self.messageLabel.setText("Sending msg to watch")
-            WCSession.default.sendMessage(
-                ["name" : "Pritesh"],
-                replyHandler: {
-                    (_ replyMessage: [String: Any]) in
-                    // @TODO: Put some stuff in here to handle any responses from the PHONE
-                    print("Message sent, put something here if u are expecting a reply from the phone")
-                    self.messageLabel.setText("Got reply from phone")
-            }, errorHandler: { (error) in
-                //@TODO: What do if you get an error
-                print("Error while sending message: \(error)")
-                self.messageLabel.setText("Error sending message")
-            })
-        }
-        else {
-            print("Phone is not reachable")
-            self.messageLabel.setText("Cannot reach phone")
-        }
-    }
-    
     
     // MARK: Functions for Pokemon Parenting
-    @IBAction func nameButtonPressed() {
-        print("name button pressed")
-    }
-
-    @IBAction func startButtonPressed() {
-        print("Start button pressed")
-    }
-    
     @IBAction func feedButtonPressed() {
         print("Feed button pressed")
+        
+        if self.hungerPoints < 12{
+            self.presentAlert(withTitle: "Warning", message: "You don't have enough hunger points", preferredStyle: .alert, actions: [
+                WKAlertAction(title: "Okay", style: .default, handler: {
+                    
+                })])
+            return
+        }
+        
+        self.hungerPoints -= 12
+        self.setupInfo()
     }
     
     @IBAction func hibernateButtonPressed() {
         print("Hibernate button pressed")
+        
+        let selectedPokemon = UserDefaults.standard.value(forKey: "Current_Selected_Pokemon") as? String ?? ""
+        let pokemonName = UserDefaults.standard.value(forKey: selectedPokemon) as? String ?? ""
+        self.sendMessage(message: ["Hibernate":true,
+                                   "Selected_Pokemon":selectedPokemon,
+                                   "Pokemon_Name":pokemonName])
+        
+    }
+    
+    //MARK: Send Message to phone
+    func sendMessage(message : [String : Any]){
+        WCSession.default.sendMessage(
+            message,
+            replyHandler: {
+                (_ replyMessage: [String: Any]) in
+                print("Message sent, put something here if u are expecting a reply from the phone")
+        }, errorHandler: { (error) in
+            print("Error while sending message: \(error)")
+        })
     }
     
 }

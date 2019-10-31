@@ -20,6 +20,7 @@
 		05E95235236494EA00AA7287 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E95234236494EA00AA7287 /* InterfaceController.swift */; };
 		05E95237236494EA00AA7287 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E95236236494EA00AA7287 /* ExtensionDelegate.swift */; };
 		05E95239236494EA00AA7287 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05E95238236494EA00AA7287 /* Assets.xcassets */; };
+		32CFBB0E236B48E600FA6390 /* HibernateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CFBB0D236B48E600FA6390 /* HibernateViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		05E95236236494EA00AA7287 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		05E95238236494EA00AA7287 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		05E9523A236494EA00AA7287 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		32CFBB0D236B48E600FA6390 /* HibernateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HibernateViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 				05E95218236494EA00AA7287 /* Assets.xcassets */,
 				05E9521A236494EA00AA7287 /* LaunchScreen.storyboard */,
 				05E9521D236494EA00AA7287 /* Info.plist */,
+				32CFBB0D236B48E600FA6390 /* HibernateViewController.swift */,
 			);
 			path = CommunicationTest;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 			files = (
 				05E95214236494EA00AA7287 /* ViewController.swift in Sources */,
 				05E95212236494E900AA7287 /* AppDelegate.swift in Sources */,
+				32CFBB0E236B48E600FA6390 /* HibernateViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

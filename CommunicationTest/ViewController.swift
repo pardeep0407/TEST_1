@@ -38,6 +38,25 @@ class ViewController: UIViewController, WCSessionDelegate  {
         // NOTE: Since session() runs in background, you cannot directly update UI from the background thread.
         // Therefore, you need to wrap any UI updates inside a DispatchQueue for it to work properly.
         DispatchQueue.main.async {
+            
+            /*["Hibernate":true,
+            "Selected_Pokemon":selectedPokemon,
+            "Pokemon_Name":pokemonName]*/
+            
+            if let isHibernate = message["Hibernate"] as? Bool{
+                if isHibernate{
+                    let selectedPokemon = message["Selected_Pokemon"] as? String ?? ""
+                    UserDefaults.standard.setValue(selectedPokemon, forKey: "Current_Selected_Pokemon")
+                    
+                    let pokemonName = message["Pokemon_Name"] as? String ?? ""
+                    UserDefaults.standard.setValue(pokemonName, forKey: selectedPokemon)
+                    UserDefaults.standard.synchronize()
+                    
+                    let hibernateVC = self.storyboard?.instantiateViewController(withIdentifier: "HibernateViewController") as! HibernateViewController
+                    self.navigationController?.pushViewController(hibernateVC, animated: true)
+                }
+            }
+            
             self.outputLabel.insertText("\nMessage Received: \(message)")
         }
         
@@ -102,11 +121,16 @@ class ViewController: UIViewController, WCSessionDelegate  {
     
     @IBAction func pokemonButtonPressed(_ sender: Any) {
         print("You pressed the pokemon button")
+        self.sendMessage(message: ["Pokemon" : "pikachu"])
     }
     @IBAction func caterpieButtonPressed(_ sender: Any) {
         print("You pressed the caterpie button")
+        self.sendMessage(message: ["Pokemon" : "caterpie"])
     }
     
-    
+    //MARK: Send Message to watch
+    func sendMessage(message : [String : String]){
+        WCSession.default.sendMessage(message, replyHandler: nil)
+    }
 }
 
